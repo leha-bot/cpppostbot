@@ -14,16 +14,20 @@ addons:
          - g++-5
          - clang-3.6
          - curl
-         
+env:
+   - MATRIX_EVAL="CC=clang-3.7 && CXX=clang++-3.7"
 before_install:
   # C++14
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-get update -qq
+  - eval "${MATRIX_EVAL}"
 
 install: 
   # C++14
   - sudo apt-get install -qq g++-5
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90
+
+
 
 script:
    - cmake .
