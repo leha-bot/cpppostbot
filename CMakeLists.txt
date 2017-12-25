@@ -10,13 +10,9 @@ if(USE_TO_STRING_HACK)
     add_definitions(-DUSE_TO_STRING_HACK)
 endif()
 
-if(MSVC)
-	# not tested.
-      set(CMAKE_CXX_FLAGS "/O2 /EHsc")
-else()
-      set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -O2 -g -std=c++1y")
-      # -Wall -Wextra -Werror -pedantic -g -std=c++1y")
-endif()
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(rcnbot
     main.cpp
@@ -26,3 +22,11 @@ add_executable(rcnbot
 )
 target_include_directories(rcnbot ${CURL_INCLUDE_DIRS})
 target_link_libraries(rcnbot ${CURL_LIBRARIES})
+
+# Enable C++14 support for msvc (@todo this should be done in cmake - use ver 3.10 or above)
+if(WIN32)
+    target_compile_options(rcnbot PRIVATE
+        /std:c++14
+        /EHsc   # Catch C++ exceptions only, extern C functions never throw a C++ exception.
+    )
+endif()
