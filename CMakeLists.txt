@@ -20,8 +20,8 @@ add_executable(rcnbot
     bot_network.cpp
     writefn_data.c
 )
-target_include_directories(rcnbot ${CURL_INCLUDE_DIRS})
-target_link_libraries(rcnbot ${CURL_LIBRARIES})
+target_include_directories(rcnbot PRIVATE ${CURL_INCLUDE_DIRS})
+target_link_libraries(rcnbot PRIVATE ${CURL_LIBRARIES})
 
 # Enable C++14 support for msvc (@todo this should be done in cmake - use ver 3.10 or above)
 if(WIN32)
